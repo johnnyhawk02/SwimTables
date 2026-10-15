@@ -1,0 +1,102 @@
+# Timetable Update Pipeline & Architectural Assurance
+
+A zero-disruption workflow for updating the Meadows Leisure Centre swim timetable whenever a new schedule PDF is released, maintaining locked business rules and pristine thermal receipt slip output.
+
+## User Review & Critical Decisions
+
+> [!IMPORTANT]
+> The following user preferences were confirmed during clarification:
+> - **Update Workflow**: Drop future timetable PDFs directly into the chat for automated parsing and ingestion into the structured dataset.
+> - **Permanent Display Rules**: All existing custom business rules remain strictly locked:
+>   1. All instances of **'Swimming Club'** are mapped to **'Pool closed'** (`category: 'club'`).
+>   2. **'Swimming Lessons'** are completely excluded from the public display and receipt outputs.
+>   3. **Lane allocations & lane counts** are omitted across all cards, matrix cells, tooltips, and thermal receipt slips.
+
+---
+
+### 1. Overview & Core Concept
+
+When an updated timetable PDF is released by Meadows Leisure Centre / Active Sefton:
+- **Disruption Level: Zero**. The application architecture completely decouples visual presentation (Timetable Document, Weekly Matrix, Thermal Receipt Slips, Session Modals) from the raw session data in `src/data/timetableData.ts`.
+- **Update Mechanism**: When you drop an updated PDF into the chat, the schedule is parsed, validated against the TypeScript schema (`SwimSession[]`), filtered through your custom business rules, and hot-swapped into `timetableData.ts`.
+- **Immediate Live Refresh**: All views, thermal receipt formats, calendar generators, and day filters instantly update without any manual code changes, layout recalculations, or printer styling disruption.
+
+---
+
+### 2. User Experience & Visual Design
+
+- **Day-to-Day Operation**:
+  - Staff or visitors select a day or facility to view sessions, or click **"Print Receipt Slip"** to generate 80mm/58mm thermal receipts with high contrast and zero clipped text.
+  - The **"Effective Date"** banner in the header updates automatically to reflect the latest PDF's release date (e.g., "Commenced 02.03.26").
+- **Visual Identity & Anti-Slop Standards**:
+  - Clean unboxed metadata with subtle typographic separators (`·`).
+  - High-contrast monochromatic thermal receipt output adhering to native POS printer specs.
+  - No broken layouts or overflowing cards when session names or durations differ in new schedules.
+
+---
+
+### 3. Key Product Decisions & Trade-Offs
+
+- **Decision 1: Chat-Assisted PDF Ingestion vs. Heavy Client-Side PDF Parser**
+  - *Chosen Approach*: Drop PDFs into the chat where the AI processes and extracts structured TypeScript session objects directly.
+  - *Why*: Council PDF timetables often contain irregular visual merged cells, footnotes, and changing table headers that break client-side PDF OCR libraries. Human/AI parsing guarantees 100% accuracy and strict adherence to your custom filtering rules.
+  - *Alternative Considered*: Embedding a client-side WebAssembly PDF extractor. Rejected due to brittle parsing of complex multi-column swimming grids.
+
+- **Decision 2: Strict Rule Normalization Pipeline**
+  - *Chosen Approach*: Automatically enforce the normalization transform:
+    `Swimming Club` ➔ `Pool closed`
+    `Swimming Lessons` ➔ `[FILTERED OUT]`
+    `lanesInfo` ➔ `undefined`
+  - *Why*: Ensures the rules can never accidentally regress when a new timetable is loaded.
+
+---
+
+### 4. Technical Architecture & Data Strategy
+
+```
+┌────────────────────────────────────────────────────────┐
+│                   NEW TIMETABLE PDF                    │
+│      (Dropped into Chat when updated by Council)       │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│              INGESTION & FILTER PIPELINE               │
+│  - Map 'Swimming Club' ➔ 'Pool closed'                 │
+│  - Strip out all 'Swimming Lessons'                    │
+│  - Omit all lane count & lane occupancy fields        │
+│  - Validate session time bounds & facility ids         │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│               src/data/timetableData.ts                │
+│             Single Source of Truth (SSOT)              │
+└─────────────┬───────────────────────────┬──────────────┘
+              │                           │
+              ▼                           ▼
+┌───────────────────────────┐ ┌───────────────────────────┐
+│     INTERACTIVE VIEWS     │ │    THERMAL RECEIPT SLIP   │
+│ - TimetableDocument.tsx   │ │ - ReceiptSlipContent.tsx  │
+│ - WeeklyMatrixView.tsx    │ │ - thermalPrinter.ts       │
+│ - SessionModal.tsx        │ │ - Clean 80mm/58mm POS     │
+└───────────────────────────┘ └───────────────────────────┘
+```
+
+#### Component & State Mapping
+- `src/data/timetableData.ts`: Holds `CENTRE_INFO` (hours, phone, effective date) and `ALL_SESSIONS`.
+- `src/components/ReceiptSlipContent.tsx`: Consumes filtered sessions and produces formatted thermal slips without lane annotations.
+- `src/components/TimetableDocument.tsx`: Responsive PDF-style document view with color category tags and zero-pill layout.
+
+---
+
+### 5. Recent Configuration Updates
+
+1. **Dedicated Print Screen (Single-Screen Experience)**: The main screen has been removed entirely; the app now functions exclusively as the dedicated **Print Receipt Slip** station.
+2. **Removed Extraneous Buttons**:
+   - Removed the "Full Timetable" button (no main screen to return to).
+   - Removed the "Copy Text" button.
+   - Removed the duplicate floating print button.
+   - Preserved only essential controls: the clean day selector (Today, Tomorrow, and Mon–Sun) and the primary "Print Slip (Ctrl+P)" action.
+3. **Standardized Session Titles**: Cleaned up the 12:00–13:00 Learner Pool sessions across all days to cleanly display `Swim & Splash (Families Only)` with no duplicate `(families)` suffix in slips or document views.
+

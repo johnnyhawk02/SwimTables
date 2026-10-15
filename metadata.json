@@ -1,0 +1,6 @@
+{
+  "name": "Meadows Leisure Centre Swim Timetable",
+  "description": "Interactive online swimming timetable with quick buttons for days, pools, session filters, live schedule, and thermal receipt printing for Meadows Leisure Centre Maghull.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

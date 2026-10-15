@@ -99,4 +99,6 @@ When an updated timetable PDF is released by Meadows Leisure Centre / Active Sef
    - Removed the duplicate floating print button.
    - Preserved only essential controls: the clean day selector (Today, Tomorrow, and Mon–Sun) and the primary "Print Slip (Ctrl+P)" action.
 3. **Standardized Session Titles**: Cleaned up the 12:00–13:00 Learner Pool sessions across all days to cleanly display `Swim & Splash (Families Only)` with no duplicate `(families)` suffix in slips or document views.
+4. **Taskbar & PWA Swim Icon**: Added branded vector and multi-resolution PNG swim icon assets (`pwa-192x192.png`, `pwa-512x512.png`, `icon-maskable.svg`, `apple-touch-icon.png`, `favicon.ico`) with Web App Manifest (`/manifest.json`), OS taskbar metadata, and in-app display.
+
 

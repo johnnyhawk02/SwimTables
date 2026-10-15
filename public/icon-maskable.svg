@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGradMask" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="50%" stop-color="#0369a1" />
+      <stop offset="100%" stop-color="#0c4a6e" />
+    </linearGradient>
+
+    <linearGradient id="waveGrad1Mask" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#7dd3fc" stop-opacity="0.95" />
+    </linearGradient>
+
+    <linearGradient id="waveGrad2Mask" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#e0f2fe" stop-opacity="0.9" />
+    </linearGradient>
+
+    <filter id="dropShadowMask" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#082f49" flood-opacity="0.35" />
+    </filter>
+  </defs>
+
+  <!-- Full-bleed background for maskable icon -->
+  <rect width="512" height="512" fill="url(#bgGradMask)" />
+
+  <!-- Centered safe-zone group (within 80% safe zone) -->
+  <g transform="translate(51.2, 51.2) scale(0.8)" filter="url(#dropShadowMask)">
+    <!-- Swimmer Head with Swim Cap -->
+    <circle cx="345" cy="165" r="34" fill="#ffffff" />
+    
+    <!-- Goggles / Cap accent line -->
+    <path d="M 330 162 Q 352 155 368 166" stroke="#0284c7" stroke-width="5" stroke-linecap="round" fill="none" />
+
+    <!-- Bent Recovery Arm over water -->
+    <path d="M 285 205 C 285 205 305 130 365 110 C 375 107 385 114 380 125 C 365 155 330 195 295 220 Z" fill="#ffffff" />
+
+    <!-- Body & Extended Forward Arm Glide -->
+    <path d="M 175 285 
+             C 195 265, 230 240, 270 220 
+             C 290 210, 315 205, 335 210 
+             C 345 212, 335 225, 315 235 
+             C 280 252, 235 285, 215 310 
+             Z" fill="#ffffff" />
+
+    <!-- Forward Extended Left Arm underwater cutting forward -->
+    <path d="M 290 225 L 390 230 C 405 231 405 245 390 246 L 270 245 Z" fill="#ffffff" />
+
+    <!-- Upper Water Wave -->
+    <path d="M 80 300 
+             C 120 270, 160 270, 200 300 
+             C 240 330, 280 330, 320 300 
+             C 360 270, 400 270, 440 300
+             L 440 325
+             C 400 295, 360 295, 320 325
+             C 280 355, 240 355, 200 325
+             C 160 295, 120 295, 80 325
+             Z" fill="url(#waveGrad2Mask)" />
+
+    <!-- Lower Water Wave -->
+    <path d="M 80 360 
+             C 125 330, 170 330, 215 360 
+             C 260 390, 305 390, 350 360 
+             C 395 330, 435 335, 440 340
+             L 440 368
+             C 410 362, 380 360, 350 385
+             C 305 415, 260 415, 215 385
+             C 170 355, 125 355, 80 385
+             Z" fill="url(#waveGrad1Mask)" />
+
+    <!-- Third subtle bottom ripple -->
+    <path d="M 120 420 
+             C 160 400, 200 400, 240 420 
+             C 280 440, 320 440, 360 420 
+             L 360 435
+             C 320 455, 280 455, 240 435
+             C 200 415, 160 415, 120 435
+             Z" fill="#38bdf8" opacity="0.6" />
+  </g>
+</svg>

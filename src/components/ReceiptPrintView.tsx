@@ -4,7 +4,7 @@ import { DAYS_OF_WEEK } from '../data/timetableData';
 import { getCurrentDayOfWeek } from '../utils/timeUtils';
 import { ReceiptSlipContent } from './ReceiptSlipContent';
 import { printThermalReceipt } from '../utils/receiptPrinter';
-import { Printer, Receipt } from 'lucide-react';
+import { Printer } from 'lucide-react';
 
 interface ReceiptPrintViewProps {
   initialDay?: DayOfWeek;
@@ -36,6 +36,28 @@ export const ReceiptPrintView: React.FC<ReceiptPrintViewProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedDay]);
 
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+
+  // PWA Install prompt listener (e.g. Chrome / Edge Save to Taskbar)
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const choice = await deferredPrompt.userChoice;
+      if (choice.outcome === 'accepted') {
+        setDeferredPrompt(null);
+      }
+    }
+  };
+
   return (
     <div className="bg-slate-50 min-h-screen text-black font-sans p-3 sm:p-6">
       
@@ -45,9 +67,11 @@ export const ReceiptPrintView: React.FC<ReceiptPrintViewProps> = ({
         {/* Top Header & Direct Print Action */}
         <div className="flex items-center justify-between gap-3 border-b border-slate-100 pb-3">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-slate-900 text-white flex items-center justify-center">
-              <Receipt className="w-4 h-4" />
-            </div>
+            <img 
+              src="/icon.svg" 
+              alt="Meadows Swimming Icon" 
+              className="w-9 h-9 rounded-xl shadow-xs border border-sky-100 shrink-0" 
+            />
             <div>
               <h1 className="text-sm font-bold text-slate-900 leading-tight">
                 Meadows Leisure Centre
@@ -58,16 +82,28 @@ export const ReceiptPrintView: React.FC<ReceiptPrintViewProps> = ({
             </div>
           </div>
 
-          {/* Primary Print Button */}
-          <button
-            onClick={triggerPrint}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 hover:bg-slate-800 active:scale-95 text-white transition cursor-pointer shadow-sm"
-            title="Print receipt on Epson thermal printer (Ctrl+P)"
-          >
-            <Printer className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Print Slip</span>
-            <span className="hidden sm:inline-block text-[10px] text-slate-400 font-mono ml-0.5">Ctrl+P</span>
-          </button>
+          <div className="flex items-center gap-2">
+            {deferredPrompt && (
+              <button
+                onClick={handleInstallClick}
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 transition cursor-pointer"
+                title="Pin app to taskbar or desktop"
+              >
+                <span>Save to Taskbar</span>
+              </button>
+            )}
+
+            {/* Primary Print Button */}
+            <button
+              onClick={triggerPrint}
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-slate-900 hover:bg-slate-800 active:scale-95 text-white transition cursor-pointer shadow-sm"
+              title="Print receipt on Epson thermal printer (Ctrl+P)"
+            >
+              <Printer className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Print Slip</span>
+              <span className="hidden sm:inline-block text-[10px] text-slate-400 font-mono ml-0.5">Ctrl+P</span>
+            </button>
+          </div>
         </div>
 
         {/* Day selection */}

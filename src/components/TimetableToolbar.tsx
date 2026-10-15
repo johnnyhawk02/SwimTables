@@ -1,9 +1,8 @@
 import React from 'react';
 import { CategoryId, DayOfWeek, FacilityId } from '../types/timetable';
-import { DAYS_OF_WEEK } from '../data/timetableData';
+import { DAYS_OF_WEEK, CENTRE_INFO } from '../data/timetableData';
 import { 
   Printer, 
-  Phone, 
   RotateCcw, 
   Radio, 
   Sparkles, 
@@ -118,13 +117,14 @@ export const TimetableToolbar: React.FC<TimetableToolbarProps> = ({
             <span>Full Sheet</span>
           </button>
 
-          {/* Call Reception Button */}
+          {/* Website Link */}
           <a
-            href="tel:01512886727"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-teal-600 hover:bg-teal-500 text-white transition shadow-xs"
+            href={CENTRE_INFO.website}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-800 transition"
           >
-            <Phone className="w-3.5 h-3.5" />
-            <span>0151 288 6727</span>
+            <span>activeseftonfitness.co.uk</span>
           </a>
 
           {/* Reset Filters */}

@@ -108,11 +108,6 @@ export const TimetableDocument: React.FC<TimetableDocumentProps> = ({
           {session.title}
         </div>
 
-        {session.title.includes('Splash') && !session.title.toLowerCase().includes('families') && (
-          <div className="text-[11px] sm:text-xs text-slate-800 leading-tight">
-            (Families Only)
-          </div>
-        )}
 
         {/* Hover Hint Overlay Button */}
         <span className="absolute inset-x-0 bottom-0 py-0.5 bg-slate-900 text-white text-[9px] font-bold opacity-0 group-hover:opacity-90 transition-opacity uppercase tracking-wider">
@@ -142,7 +137,7 @@ export const TimetableDocument: React.FC<TimetableDocumentProps> = ({
           </div>
 
           <p className="text-xs sm:text-sm text-slate-600 font-medium">
-            Hall Lane, Maghull, Liverpool, Merseyside L31 7BB. Tel: 0151 288 6727
+            Hall Lane, Maghull, Liverpool, Merseyside L31 7BB
           </p>
         </div>
 
@@ -333,10 +328,7 @@ export const TimetableDocument: React.FC<TimetableDocumentProps> = ({
           >
             www.activeseftonfitness.co.uk
           </a>
-          , at reception or call on{' '}
-          <a href="tel:01512886727" className="text-teal-700 hover:underline font-bold">
-            0151 288 6727
-          </a>
+          {' '}or at reception.
         </div>
 
         {/* 6 Locations & activefitness branding */}

@@ -69,7 +69,7 @@ export function generateICalData(session: SwimSession): string {
   // Generate RFC 5545 iCalendar content
   const now = new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
   const cleanSummary = `${session.title} - ${session.facilityName} (Meadows Leisure Centre)`;
-  const description = `${session.description}\\nRestrictions: ${session.ageRestriction || 'None'}\\nTel: 0151 288 6727`;
+  const description = `${session.description}\\nRestrictions: ${session.ageRestriction || 'None'}`;
   const location = 'Meadows Leisure Centre, Hall Lane, Maghull, Liverpool L31 7BB';
 
   return `BEGIN:VCALENDAR
@@ -103,7 +103,7 @@ export function downloadCalendarEvent(session: SwimSession) {
 export function getGoogleCalendarUrl(session: SwimSession): string {
   const text = encodeURIComponent(`${session.title} - ${session.facilityName} (Meadows)`);
   const details = encodeURIComponent(
-    `${session.description}\nNotes: ${session.priceNote || ''}\nLocation: Meadows Leisure Centre, Hall Lane, Maghull, Liverpool L31 7BB\nTel: 0151 288 6727`
+    `${session.description}\nNotes: ${session.priceNote || ''}\nLocation: Meadows Leisure Centre, Hall Lane, Maghull, Liverpool L31 7BB`
   );
   const location = encodeURIComponent('Meadows Leisure Centre, Hall Lane, Maghull, Liverpool L31 7BB');
   return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${text}&details=${details}&location=${location}`;

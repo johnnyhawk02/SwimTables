@@ -20,110 +20,114 @@ export const ReceiptSlipContent: React.FC<ReceiptSlipContentProps> = ({ day }) =
   return (
     <div
       id="receipt-print-area"
-      className="receipt receipt-slip bg-white text-black text-center w-[250px] max-w-[250px] mx-auto box-border"
+      className="receipt receipt-slip bg-white text-black text-center w-[250px] max-w-[250px] mx-auto box-border select-none"
       style={{
         width: '250px',
         maxWidth: '250px',
         margin: '0 auto',
-        padding: '12px 6px',
+        padding: '16px 8px 24px 8px',
         boxSizing: 'border-box',
         textAlign: 'center',
         pageBreakInside: 'avoid',
-        fontFamily: '-apple-system, system-ui, sans-serif',
+        fontFamily: "'Helvetica Neue', Helvetica, Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
         color: '#000000',
         backgroundColor: '#ffffff',
-        fontSize: '14px',
-        lineHeight: '1.3',
+        fontSize: '13.5px',
+        lineHeight: '1.35',
+        WebkitFontSmoothing: 'antialiased',
       }}
     >
-      {/* HEADER */}
-      <div className="border-t border-dashed border-black pt-1 mb-1"></div>
-      <div className="font-bold text-[15px] uppercase tracking-wide text-black">
-        MEADOWS LEISURE CENTRE
-      </div>
-      <div className="text-xs font-medium text-black mt-0.5">
-        Maghull • Tel: 0151 288 6727
-      </div>
-      <div className="border-b border-dashed border-black pb-1 my-1.5"></div>
-
-      {/* DAY TITLE */}
-      <div className="my-2 text-center font-bold text-sm tracking-wide uppercase text-black">
-        {day.toUpperCase()} TIMES
+      {/* FULL WORD FOR THE DAY IN 36 POINT FONT BOLD */}
+      <div
+        className="font-bold text-black leading-none text-center whitespace-nowrap mb-2 tracking-[-0.035em] select-none"
+        style={{ fontSize: '36pt', fontWeight: 700, lineHeight: 1 }}
+      >
+        {day}
       </div>
 
-      {/* 1. MAIN POOL */}
+      {/* CENTRE LOCKUP */}
+      <header className="mb-6 text-center">
+        <h1 className="font-semibold text-[13px] text-black leading-snug m-0">
+          Meadows Leisure Centre
+        </h1>
+        <p className="text-[11px] font-normal text-black mt-0.5 m-0">
+          Maghull
+        </p>
+      </header>
+
+      {/* 1. MAIN POOL - BOLD SECTION TITLE, LARGER READABLE ROWS */}
       {mainSessions.length > 0 && (
-        <div className="mb-2.5">
-          <div className="font-bold text-xs text-left border-b border-black pb-0.5 mb-1 tracking-wide uppercase text-black">
-            MAIN POOL:
+        <section className="mb-5 text-left">
+          <div className="font-bold text-[14px] text-black mb-2">
+            Main Pool
           </div>
-          <table className="w-full text-xs text-black border-collapse">
+          <table className="w-full text-black border-collapse">
             <tbody>
               {mainSessions.map((session) => (
-                <tr key={session.id} className="align-top">
-                  <td className="font-bold text-left whitespace-nowrap pr-1.5 py-0.5 text-black w-[48%]">
+                <tr key={session.id} className="align-top leading-snug">
+                  <td className="font-normal text-left whitespace-nowrap pr-2 py-1 text-black w-[46%] tabular-nums text-[13px]">
                     {session.startTime} - {session.endTime}
                   </td>
-                  <td className="font-medium text-right py-0.5 text-black w-[52%]">
+                  <td className="font-normal text-right py-1 text-black w-[54%] text-[13px]">
                     {session.title}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-        </div>
+        </section>
       )}
 
-      {/* 2. LEARNER POOL */}
+      {/* 2. LEARNER POOL - BOLD SECTION TITLE, LARGER READABLE ROWS */}
       {learnerSessions.length > 0 && (
-        <div className="mb-2.5">
-          <div className="font-bold text-xs text-left border-b border-black pb-0.5 mb-1 tracking-wide uppercase text-black">
-            LEARNER POOL:
+        <section className="mb-5 text-left">
+          <div className="font-bold text-[14px] text-black mb-2">
+            Learner Pool
           </div>
-          <table className="w-full text-xs text-black border-collapse">
+          <table className="w-full text-black border-collapse">
             <tbody>
               {learnerSessions.map((session) => (
-                <tr key={session.id} className="align-top">
-                  <td className="font-bold text-left whitespace-nowrap pr-1.5 py-0.5 text-black w-[48%]">
+                <tr key={session.id} className="align-top leading-snug">
+                  <td className="font-normal text-left whitespace-nowrap pr-2 py-1 text-black w-[46%] tabular-nums text-[13px]">
                     {session.startTime} - {session.endTime}
                   </td>
-                  <td className="font-medium text-right py-0.5 text-black w-[52%]">
+                  <td className="font-normal text-right py-1 text-black w-[54%] text-[13px]">
                     {session.title}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-        </div>
+        </section>
       )}
 
-      {/* 3. HEALTH SUITE */}
+      {/* 3. HEALTH SUITE - BOLD SECTION TITLE, LARGER READABLE ROWS */}
       {healthSessions.length > 0 && (
-        <div className="mb-2.5">
-          <div className="font-bold text-xs text-left border-b border-black pb-0.5 mb-1 tracking-wide uppercase text-black">
-            HEALTH SUITE (16+):
+        <section className="mb-5 text-left">
+          <div className="font-bold text-[14px] text-black mb-2">
+            Health Suite (16+)
           </div>
-          <table className="w-full text-xs text-black border-collapse">
+          <table className="w-full text-black border-collapse">
             <tbody>
-              <tr className="align-top">
-                <td className="font-bold text-left whitespace-nowrap pr-1.5 py-0.5 text-black w-[48%]">
+              <tr className="align-top leading-snug">
+                <td className="font-normal text-left whitespace-nowrap pr-2 py-1 text-black w-[46%] tabular-nums text-[13px]">
                   {healthSessions[0].startTime} - {healthSessions[0].endTime}
                 </td>
-                <td className="font-medium text-right py-0.5 text-black w-[52%]">
-                  Sauna & Steam Open
+                <td className="font-normal text-right py-1 text-black w-[54%] text-[13px]">
+                  Sauna &amp; Steam
                 </td>
               </tr>
             </tbody>
           </table>
-        </div>
+        </section>
       )}
 
-      {/* FOOTER */}
-      <div className="border-t border-dashed border-black pt-1.5 mt-2 text-center text-[11px] font-medium text-black leading-tight">
-        <div>activeseftonfitness.co.uk</div>
-        <div>Reception: 0151 288 6727</div>
-      </div>
-      <div className="border-b border-dashed border-black pb-1 mt-1.5"></div>
+      {/* FOOTER - CLEAN, LARGER FOR THERMAL READABILITY */}
+      <footer className="mt-7 pt-1 text-center">
+        <span className="text-[12px] font-medium text-black block">
+          activeseftonfitness.co.uk
+        </span>
+      </footer>
     </div>
   );
 };

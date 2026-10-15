@@ -100,5 +100,24 @@ When an updated timetable PDF is released by Meadows Leisure Centre / Active Sef
    - Preserved only essential controls: the clean day selector (Today, Tomorrow, and Mon–Sun) and the primary "Print Slip (Ctrl+P)" action.
 3. **Standardized Session Titles**: Cleaned up the 12:00–13:00 Learner Pool sessions across all days to cleanly display `Swim & Splash (Families Only)` with no duplicate `(families)` suffix in slips or document views.
 4. **Taskbar & PWA Swim Icon**: Added branded vector and multi-resolution PNG swim icon assets (`pwa-192x192.png`, `pwa-512x512.png`, `icon-maskable.svg`, `apple-touch-icon.png`, `favicon.ico`) with Web App Manifest (`/manifest.json`), OS taskbar metadata, and in-app display.
-
-
+5. **Phone Number Removal & Helvetica Typography**:
+   - Removed all telephone numbers across the application, receipt headers (`Maghull • Tel: ...` -> `MAGHULL`), and footers (`Reception: ...` -> `activeseftonfitness.co.uk`).
+   - Restyled the entire app and receipt print engine with a clean, elegant Swiss / Helvetica font stack (`'Helvetica Neue', Helvetica, 'Inter', Arial, sans-serif`), balanced letter-spacing, crisp tabular numerals, and refined paper preview aesthetics.
+6. **Line Removal & Pure Spatial / Typographic Grouping**:
+   - Removed all dashed dividing lines, top/bottom rules, and underline borders from the receipt slip and print outputs.
+   - Employed proportional vertical rhythm and Gestalt whitespace grouping to separate sections (Header, Day Title, Main Pool, Learner Pool, Health Suite, Footer).
+   - Refined font tracking and line spacing for effortless scannability.
+   - Cleaned up the non-printing toolbar by removing extraneous divider lines and hard button borders in favor of soft background contrast and spatial clarity.
+7. **Thermal Legibility Enhancement & Natural Case Titles**:
+   - Increased font sizes across the receipt slip for sharp readability on thermal receipt printers (table rows to 13px/13.5px with comfortable leading and vertical row padding).
+   - Removed all-caps styling completely, using natural title casing throughout (`Meadows Leisure Centre`, `Maghull`, `Monday Times`, `Main Pool`, `Learner Pool`, `Health Suite (16+)`).
+8. **Normal Weight Times with Bold Group Titles**:
+   - Set all session times (`startTime - endTime`) and descriptions to regular/normal weight (`font-normal` / `400`).
+   - Reserved bold styling exclusively for the group titles (`Main Pool`, `Learner Pool`, `Health Suite (16+)`), center header, and day heading for clean visual hierarchy.
+9. **Removed 'Open' Suffix from Health Suite Sessions**:
+   - Removed the extraneous 'Open' descriptor from 'Sauna & Steam Open', so all slips simply and cleanly display `Sauna & Steam` alongside their opening hours.
+10. **Removed '(Families Only)' Subtitle from 12–1 Learner Pool Sessions**:
+   - Updated all weekday 12:00–13:00 Learner Pool sessions to cleanly read `Swim & Splash` with no restrictions or `(families only)` tag.
+11. **Full Day Word in 36pt Bold Font at Top**:
+   - Replaced abbreviated and striped designs with the complete, unabbreviated day word (`Monday`, `Tuesday`, `Wednesday`, `Thursday`, `Friday`, `Saturday`, `Sunday`) prominently positioned at the top of the slip.
+   - Set in solid, authoritative **36pt bold** Helvetica/grotesque type (`font-size: 36pt`, `font-weight: 700`, `letter-spacing: -0.035em`, `nowrap`) for instant legibility on thermal rolls.

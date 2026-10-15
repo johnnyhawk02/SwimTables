@@ -251,7 +251,7 @@ export const WhatsOnNowBar: React.FC<WhatsOnNowBarProps> = ({
                   >
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-bold text-white flex items-center gap-1">
-                        <span>🧖</span> Sauna & Steam Open
+                        <span>🧖</span> Sauna & Steam
                       </span>
                       <span className="text-[10px] font-mono text-teal-300 font-bold">
                         until {s.endTime}

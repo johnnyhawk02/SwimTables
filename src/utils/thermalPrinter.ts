@@ -24,8 +24,8 @@ export function printThermalReceipt(day: DayOfWeek): void {
   const mainRows = mainSessions.map(
     (s) => `
     <tr>
-      <td style="text-align: left; font-weight: 700; white-space: nowrap; padding: 2px 0; vertical-align: top;">${s.startTime} - ${s.endTime}</td>
-      <td style="text-align: right; font-weight: 600; padding: 2px 0; vertical-align: top;">${s.title}</td>
+      <td style="text-align: left; font-weight: 400; white-space: nowrap; padding: 3px 0; vertical-align: top;">${s.startTime} - ${s.endTime}</td>
+      <td style="text-align: right; font-weight: 400; padding: 3px 0; vertical-align: top;">${s.title}</td>
     </tr>`
   ).join('');
 
@@ -33,16 +33,16 @@ export function printThermalReceipt(day: DayOfWeek): void {
   const learnerRows = learnerSessions.map(
     (s) => `
     <tr>
-      <td style="text-align: left; font-weight: 700; white-space: nowrap; padding: 2px 0; vertical-align: top;">${s.startTime} - ${s.endTime}</td>
-      <td style="text-align: right; font-weight: 600; padding: 2px 0; vertical-align: top;">${s.title}${s.ageRestriction?.includes('Families') ? ' (Families)' : ''}</td>
+      <td style="text-align: left; font-weight: 400; white-space: nowrap; padding: 3px 0; vertical-align: top;">${s.startTime} - ${s.endTime}</td>
+      <td style="text-align: right; font-weight: 400; padding: 3px 0; vertical-align: top;">${s.title}</td>
     </tr>`
   ).join('');
 
   // Generate table row for health suite
   const healthRows = healthSessions.length > 0 ? `
     <tr>
-      <td style="text-align: left; font-weight: 700; white-space: nowrap; padding: 2px 0; vertical-align: top;">${healthSessions[0].startTime} - ${healthSessions[0].endTime}</td>
-      <td style="text-align: right; font-weight: 600; padding: 2px 0; vertical-align: top;">Sauna & Steam Open</td>
+      <td style="text-align: left; font-weight: 400; white-space: nowrap; padding: 3px 0; vertical-align: top;">${healthSessions[0].startTime} - ${healthSessions[0].endTime}</td>
+      <td style="text-align: right; font-weight: 400; padding: 3px 0; vertical-align: top;">Sauna & Steam</td>
     </tr>` : '';
 
   // 2. Write minimal HTML document into that window with receipt-optimized print styles
@@ -59,73 +59,70 @@ export function printThermalReceipt(day: DayOfWeek): void {
       width: 100% !important; 
       background: white; 
       color: black; 
-      font-family: -apple-system, system-ui, sans-serif; 
+      font-family: 'Helvetica Neue', Helvetica, Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
       overflow-x: hidden !important; 
+      -webkit-font-smoothing: antialiased;
     }
     .receipt { 
       width: 250px; 
       max-width: 250px; 
       margin: 0 auto !important; 
-      padding: 12px 6px; 
+      padding: 16px 8px 24px 8px; 
       box-sizing: border-box; 
       text-align: center; 
       page-break-inside: avoid; 
       color: #000000;
-      font-size: 14px;
-      line-height: 1.25;
+      font-size: 13.5px;
+      line-height: 1.35;
     }
-    .divider {
-      border-top: 1px dashed #000000;
-      margin: 6px 0;
+    .section-title { 
+      font-weight: 700; 
+      font-size: 14px; 
+      text-align: left; 
+      margin-bottom: 8px; 
     }
-    .section-title {
-      font-weight: 700;
-      font-size: 13px;
-      text-align: left;
-      border-bottom: 1px solid #000000;
-      padding-bottom: 2px;
-      margin-bottom: 4px;
-      letter-spacing: 0.5px;
+    table { 
+      width: 100%; 
+      margin: 0 auto !important; 
+      border-collapse: collapse; 
+      font-size: 13px; 
     }
-    table {
-      width: 100%;
-      margin: 0 auto !important;
-      border-collapse: collapse;
-      font-size: 12px;
+    table td {
+      padding: 3px 0;
+      vertical-align: top;
+      line-height: 1.3;
     }
   </style>
 </head>
 <body>
   <div class="receipt">
-    <div style="font-weight: 800; font-size: 15px; letter-spacing: 0.5px;">MEADOWS LEISURE CENTRE</div>
-    <div style="font-size: 12px; font-weight: 600; margin-top: 2px;">Maghull • Tel: 0151 288 6727</div>
-    <div class="divider"></div>
-
-    <div style="font-weight: 800; font-size: 15px; margin: 6px 0; letter-spacing: 0.5px;">
-      *** ${day.toUpperCase()} TIMES ***
+    <div style="font-size: 36pt; font-weight: 700; line-height: 1; letter-spacing: -0.035em; text-align: center; white-space: nowrap; margin-bottom: 6px;">
+      ${day}
+    </div>
+    <div style="margin-bottom: 24px; text-align: center;">
+      <div style="font-weight: 600; font-size: 13px; line-height: 1.25;">Meadows Leisure Centre</div>
+      <div style="font-size: 11px; font-weight: 400; margin-top: 2px;">Maghull</div>
     </div>
 
     ${mainSessions.length > 0 ? `
-    <div style="margin-bottom: 8px;">
-      <div class="section-title">MAIN POOL:</div>
+    <div style="margin-bottom: 20px; text-align: left;">
+      <div class="section-title">Main Pool</div>
       <table>${mainRows}</table>
     </div>` : ''}
 
     ${learnerSessions.length > 0 ? `
-    <div style="margin-bottom: 8px;">
-      <div class="section-title">LEARNER POOL:</div>
+    <div style="margin-bottom: 20px; text-align: left;">
+      <div class="section-title">Learner Pool</div>
       <table>${learnerRows}</table>
     </div>` : ''}
 
     ${healthSessions.length > 0 ? `
-    <div style="margin-bottom: 8px;">
-      <div class="section-title">HEALTH SUITE (16+):</div>
+    <div style="margin-bottom: 20px; text-align: left;">
+      <div class="section-title">Health Suite (16+)</div>
       <table>${healthRows}</table>
     </div>` : ''}
 
-    <div class="divider"></div>
-    <div style="font-size: 11px; font-weight: 500; margin-top: 4px;">activeseftonfitness.co.uk</div>
-    <div style="font-size: 11px; font-weight: 500;">Reception: 0151 288 6727</div>
+    <div style="font-size: 12px; font-weight: 500; margin-top: 28px; text-align: center;">activeseftonfitness.co.uk</div>
   </div>
 
   <script>

@@ -1,8 +1,18 @@
 @import "tailwindcss";
 
 @layer base {
+  html {
+    font-family: 'Helvetica Neue', Helvetica, 'Inter', Arial, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
   body {
-    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, 'Inter', Arial, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #f6f7f9;
+    color: #111827;
   }
 }
 
@@ -31,8 +41,9 @@
     width: 100% !important;
     background: white !important;
     color: black !important;
-    font-family: -apple-system, system-ui, sans-serif !important;
+    font-family: 'Helvetica Neue', Helvetica, Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
     overflow-x: hidden !important;
+    -webkit-font-smoothing: antialiased;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
@@ -47,7 +58,7 @@
     width: 250px !important;
     max-width: 250px !important;
     margin: 0 auto !important;
-    padding: 12px 6px !important;
+    padding: 16px 8px 24px 8px !important;
     box-sizing: border-box !important;
     text-align: center !important;
     page-break-inside: avoid !important;
@@ -55,7 +66,7 @@
     box-shadow: none !important;
     background: white !important;
     color: #000000 !important;
-    font-family: -apple-system, system-ui, sans-serif !important;
+    font-family: 'Helvetica Neue', Helvetica, Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
   }
 
   #receipt-print-area * {

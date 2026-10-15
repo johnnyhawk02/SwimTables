@@ -38,7 +38,7 @@ export function generateReceiptHtml(day: DayOfWeek): string {
     healthSessions.length > 0
       ? `<tr>
           <td class="time">${healthSessions[0].startTime} - ${healthSessions[0].endTime}</td>
-          <td class="desc">Sauna & Steam Open</td>
+          <td class="desc">Sauna & Steam</td>
         </tr>`
       : '';
 
@@ -57,8 +57,9 @@ export function generateReceiptHtml(day: DayOfWeek): string {
       width: 100% !important;
       background: white;
       color: black;
-      font-family: -apple-system, system-ui, sans-serif;
+      font-family: 'Helvetica Neue', Helvetica, Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       overflow-x: hidden !important;
+      -webkit-font-smoothing: antialiased;
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
     }
@@ -66,45 +67,47 @@ export function generateReceiptHtml(day: DayOfWeek): string {
       width: 250px;
       max-width: 250px;
       margin: 0 auto !important;
-      padding: 12px 6px;
+      padding: 16px 8px 24px 8px;
       box-sizing: border-box;
       text-align: center;
       page-break-inside: avoid;
       color: #000000;
-      font-size: 14px;
-      line-height: 1.3;
+      font-size: 13.5px;
+      line-height: 1.35;
+    }
+    .day-feature {
+      font-size: 36pt;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.035em;
+      text-align: center;
+      white-space: nowrap;
+      margin-bottom: 6px;
+    }
+    .header-group {
+      margin-bottom: 24px;
+      text-align: center;
     }
     .header-title {
-      font-size: 15px;
-      font-weight: 700;
-      margin: 0 0 2px 0;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      font-size: 13px;
+      font-weight: 600;
+      margin: 0;
+      line-height: 1.25;
     }
     .header-sub {
-      font-size: 12px;
-      font-weight: 500;
-      margin: 0 0 4px 0;
+      font-size: 11px;
+      font-weight: 400;
+      margin: 2px 0 0 0;
     }
-    .divider {
-      border-top: 1px dashed #000000;
-      margin: 6px 0;
-    }
-    .day-title {
-      font-size: 14px;
-      font-weight: 700;
-      margin: 6px 0;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+    .section-group {
+      margin-bottom: 20px;
+      text-align: left;
     }
     .section-title {
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 700;
       text-align: left;
-      border-bottom: 1px solid #000000;
-      padding-bottom: 2px;
-      margin: 8px 0 3px 0;
-      letter-spacing: 0.3px;
+      margin: 0 0 8px 0;
     }
     table {
       width: 100%;
@@ -113,26 +116,28 @@ export function generateReceiptHtml(day: DayOfWeek): string {
       font-size: 13px;
     }
     table td {
-      padding: 2.5px 0;
+      padding: 3px 0;
       vertical-align: top;
+      line-height: 1.3;
     }
     table .time {
-      font-weight: 700;
+      font-weight: 400;
       white-space: nowrap;
       text-align: left;
-      width: 48%;
-      padding-right: 4px;
+      width: 46%;
+      padding-right: 6px;
+      font-variant-numeric: tabular-nums;
     }
     table .desc {
-      font-weight: 500;
+      font-weight: 400;
       text-align: right;
-      width: 52%;
+      width: 54%;
     }
     .footer {
-      margin-top: 8px;
-      font-size: 11px;
+      margin-top: 28px;
+      font-size: 12px;
       font-weight: 500;
-      line-height: 1.35;
+      line-height: 1.3;
       text-align: center;
     }
     .no-print-bar {
@@ -145,7 +150,7 @@ export function generateReceiptHtml(day: DayOfWeek): string {
       border: none;
       padding: 6px 14px;
       font-size: 12px;
-      font-weight: bold;
+      font-weight: 600;
       border-radius: 4px;
       cursor: pointer;
       font-family: inherit;
@@ -170,52 +175,54 @@ export function generateReceiptHtml(day: DayOfWeek): string {
     <button class="print-btn" onclick="window.print()">🖨️ Print Slip</button>
   </div>
   <div class="receipt">
-    <div class="divider"></div>
-    <div class="header-title">MEADOWS LEISURE CENTRE</div>
-    <div class="header-sub">Maghull • Tel: 0151 288 6727</div>
-    <div class="divider"></div>
-
-    <div class="day-title">${day.toUpperCase()} TIMES</div>
+    <div class="day-feature">${day}</div>
+    <div class="header-group">
+      <div class="header-title">Meadows Leisure Centre</div>
+      <div class="header-sub">Maghull</div>
+    </div>
 
     ${
       mainSessions.length > 0
-        ? `<div class="section-title">MAIN POOL:</div>
-           <table>
-             <tbody>
-               ${mainRowsHtml}
-             </tbody>
-           </table>`
+        ? `<div class="section-group">
+             <div class="section-title">Main Pool</div>
+             <table>
+               <tbody>
+                 ${mainRowsHtml}
+               </tbody>
+             </table>
+           </div>`
         : ''
     }
 
     ${
       learnerSessions.length > 0
-        ? `<div class="section-title">LEARNER POOL:</div>
-           <table>
-             <tbody>
-               ${learnerRowsHtml}
-             </tbody>
-           </table>`
+        ? `<div class="section-group">
+             <div class="section-title">Learner Pool</div>
+             <table>
+               <tbody>
+                 ${learnerRowsHtml}
+               </tbody>
+             </table>
+           </div>`
         : ''
     }
 
     ${
       healthSessions.length > 0
-        ? `<div class="section-title">HEALTH SUITE (16+):</div>
-           <table>
-             <tbody>
-               ${healthRowHtml}
-             </tbody>
-           </table>`
+        ? `<div class="section-group">
+             <div class="section-title">Health Suite (16+)</div>
+             <table>
+               <tbody>
+                 ${healthRowHtml}
+               </tbody>
+             </table>
+           </div>`
         : ''
     }
 
-    <div class="divider"></div>
     <div class="footer">
-      activeseftonfitness.co.uk<br />
-      Reception: 0151 288 6727
+      activeseftonfitness.co.uk
     </div>
-    <div class="divider"></div>
   </div>
 </body>
 </html>`;
